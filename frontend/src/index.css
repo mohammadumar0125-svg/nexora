@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --nexora-bg: #F6F8FC;
+  --nexora-surface: #FFFFFF;
+  --nexora-surface-subtle: #EEF2FA;
+  --nexora-cobalt: #3867E9;
+  --nexora-cobalt-hover: #2952C8;
+  --nexora-mint: #22A995;
+  --nexora-champagne: #D69B42;
+  --nexora-ink: #202B43;
+  --nexora-muted: #4E5D78;
+  --nexora-border: #E2E8F4;
+}
+
+@layer base {
+  html {
+    background-color: var(--nexora-bg);
+    color: var(--nexora-ink);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #3867E9;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+  }
+}

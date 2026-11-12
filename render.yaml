@@ -1,0 +1,23 @@
+# Render Blueprint — FREE web service + external free Postgres (Neon).
+# Render's own free Postgres is deleted after 30 days, so use Neon (no expiry).
+services:
+  - type: web
+    name: nexora-order-agent
+    runtime: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      # Paste your Neon *direct* connection string (host WITHOUT "-pooler"). Keeps sslmode=require.
+      - key: MIGRATION_DATABASE_URL
+        sync: false
+      # Password the app's least-privilege DB role (api_role) will use. Auto-generated.
+      - key: DB_API_PASSWORD
+        generateValue: true
+      # Set to "false" to skip the public demo workspace (it has known demo passwords).
+      - key: SEED_SAMPLE_WORKSPACE
+        value: "false"
+      - key: GEMINI_API_KEY
+        sync: false

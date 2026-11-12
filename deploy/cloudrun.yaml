@@ -1,0 +1,52 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: nexora-enterprise
+  labels:
+    cloud.googleapis.com/location: asia-south1
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "10"
+        run.googleapis.com/cloudsql-instances: "${GCP_PROJECT_ID}:asia-south1:nexora-pg16"
+    spec:
+      serviceAccountName: "nexora-cloudrun-sa@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
+      containers:
+        - image: "asia-south1-docker.pkg.dev/${GCP_PROJECT_ID}/nexora/nexora-enterprise:${IMAGE_TAG}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_ENV
+              value: "production"
+            - name: COOKIE_SECURE
+              value: "true"
+            - name: STORAGE_BACKEND
+              value: "gcs"
+            - name: GCS_BUCKET_NAME
+              value: "${GCP_PROJECT_ID}-nexora-private-uploads"
+            - name: CORS_ORIGINS
+              value: "https://app.nexora-example.in"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: nexora-api-database-url
+                  key: latest
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nexora-gemini-api-key
+                  key: latest
+          resources:
+            limits:
+              cpu: "2"
+              memory: "1Gi"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080

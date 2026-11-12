@@ -1,0 +1,2616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NEXORA — The Next Generation Business Developer. One intelligent workspace for growing businesses in India to manage relationships, operations, and decisions." />
+  <title>NEXORA — The Next Generation Business Developer</title>
+
+  <!-- Google Fonts: Clean Humanist Sans (Noto Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =====================================================================
+       DESIGN SYSTEM & TOKENS (Light & Dark Mode + High Contrast WCAG AA)
+       ===================================================================== */
+    :root {
+      --bg: #F9F9FB;
+      --surface: #FFFFFF;
+      --surface-elevated: #FFFFFF;
+      --text: #22212E;
+      --text-muted: #57546E;
+      --border: #E5E3F0;
+      --border-strong: #CECAE0;
+
+      /* Core Brand Colors */
+      --primary: #52447F;
+      --primary-hover: #42356B;
+      --primary-ink: #FFFFFF;
+      --primary-text: #52447F;
+
+      /* Soft Section & Card Tints */
+      --tint-lavender: #F0ECFA;
+      --tint-lavender-bar: #52447F;
+      --tint-sky: #DFEAF8;
+      --tint-sky-bar: #2B6CB0;
+      --tint-mint: #DCF0EA;
+      --tint-mint-bar: #1E7E62;
+      --tint-peach: #F8EADF;
+      --tint-peach-bar: #B45A2D;
+
+      /* Semantic UI States */
+      --shadow-sm: 0 4px 14px rgba(34, 33, 46, 0.04);
+      --shadow-md: 0 12px 32px rgba(34, 33, 46, 0.06);
+      --shadow-lg: 0 20px 48px rgba(82, 68, 127, 0.10);
+      --focus-ring: 0 0 0 3px rgba(82, 68, 127, 0.35);
+
+      --radius-card: 24px;
+      --radius-inner: 16px;
+      --radius-btn: 12px;
+      --radius-pill: 999px;
+      --nav-height: 74px;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #13121C;
+      --surface: #1B1928;
+      --surface-elevated: #232033;
+      --text: #F4F3FA;
+      --text-muted: #B8B4CC;
+      --border: #2D2A40;
+      --border-strong: #3E3A57;
+
+      --primary: #6D5CA8;
+      --primary-hover: #7D6CBA;
+      --primary-ink: #FFFFFF;
+      --primary-text: #C4B8EE;
+
+      --tint-lavender: rgba(139, 123, 198, 0.14);
+      --tint-lavender-bar: #A796E3;
+      --tint-sky: rgba(96, 165, 250, 0.13);
+      --tint-sky-bar: #7BB6F7;
+      --tint-mint: rgba(74, 222, 180, 0.12);
+      --tint-mint-bar: #5DD3AF;
+      --tint-peach: rgba(251, 169, 120, 0.13);
+      --tint-peach-bar: #F0A170;
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.45);
+      --focus-ring: 0 0 0 3px rgba(196, 184, 238, 0.45);
+    }
+
+    /* =====================================================================
+       RESET & BASE TYPOGRAPHY
+       ===================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 12px;
+      z-index: 1000;
+      background: var(--primary);
+      color: var(--primary-ink);
+      padding: 10px 18px;
+      border-radius: var(--radius-btn);
+      font-weight: 700;
+    }
+    .skip-link:focus {
+      left: 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 76px 0;
+      scroll-margin-top: var(--nav-height);
+    }
+
+    /* Optimize below-the-fold rendering */
+    .lazy-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 620px;
+    }
+
+    /* =====================================================================
+       SHARED TYPOGRAPHY, PILLS, BUTTONS & CARDS
+       ===================================================================== */
+    .section-header {
+      max-width: 680px;
+      margin-bottom: 40px;
+    }
+
+    .section-header.centered {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--tint-lavender);
+      color: var(--primary-text);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(2.15rem, 4.2vw, 3.35rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+
+    h2 {
+      font-size: clamp(1.65rem, 3vw, 2.35rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+    }
+
+    .lead {
+      font-size: clamp(1rem, 1.5vw, 1.14rem);
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+
+    /* Consistent Primary & Secondary Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: var(--radius-btn);
+      font-weight: 700;
+      font-size: 0.94rem;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform 0.16s ease, background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--primary-ink);
+      box-shadow: 0 6px 18px rgba(82, 68, 127, 0.22);
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background-color: var(--surface);
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+    .btn-secondary:hover {
+      border-color: var(--primary-text);
+      background-color: var(--tint-lavender);
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 9px 16px;
+      font-size: 0.85rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-sm);
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Card Colored Accent Top Bar */
+    .accent-bar {
+      height: 5px;
+      width: 48px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 16px;
+    }
+    .bar-lavender { background: var(--tint-lavender-bar); }
+    .bar-sky { background: var(--tint-sky-bar); }
+    .bar-mint { background: var(--tint-mint-bar); }
+    .bar-peach { background: var(--tint-peach-bar); }
+
+    /* Editable Placeholder Markers */
+    .edit-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      background: var(--tint-peach);
+      color: var(--tint-peach-bar);
+      border: 1px dashed var(--tint-peach-bar);
+      vertical-align: middle;
+    }
+
+    .planned-badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--tint-sky);
+      color: var(--tint-sky-bar);
+    }
+
+    /* Scroll reveal transitions */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =====================================================================
+       SECTION 1: MINIMAL STICKY NAVIGATION
+       ===================================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: color 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .icon-btn:hover {
+      background: var(--tint-lavender);
+      color: var(--primary-text);
+    }
+
+    .mobile-menu {
+      display: none;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px 22px;
+    }
+    .mobile-menu.open {
+      display: block;
+    }
+    .mobile-menu a {
+      display: block;
+      padding: 10px 4px;
+      font-weight: 600;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (min-width: 860px) {
+      .nav-links { display: flex; }
+      .mobile-toggle { display: none; }
+    }
+
+    /* =====================================================================
+       SECTION 2 & 3: HERO + INTERACTIVE LIVE-SYNC SANDBOX
+       ===================================================================== */
+    .hero {
+      padding: 56px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (min-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 44px;
+      }
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .topic-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .topic-pill.lavender { background: var(--tint-lavender); color: var(--primary-text); }
+    .topic-pill.mint { background: var(--tint-mint); color: var(--tint-mint-bar); }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Interactive Demo Card */
+    .demo-shell {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 26px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .demo-topbar {
+      padding: 14px 20px;
+      background: var(--tint-lavender);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .demo-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--primary-text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-reset {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      padding: 4px 11px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .demo-reset:hover {
+      color: var(--primary-text);
+      border-color: var(--primary-text);
+    }
+
+    .demo-controls {
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    @media (max-width: 540px) {
+      .demo-controls { grid-template-columns: 1fr; }
+    }
+
+    .step-btn {
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s ease;
+    }
+
+    .step-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-ink);
+    }
+
+    .step-btn.done {
+      background: var(--tint-mint);
+      border-color: var(--tint-mint-bar);
+      color: var(--tint-mint-bar);
+    }
+
+    .step-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .demo-body {
+      padding: 18px 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    /* Pipeline lanes inside demo */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 540px) {
+      .pipeline-grid { grid-template-columns: 1fr; }
+    }
+
+    .lane {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      min-height: 98px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lane-head {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .lead-card {
+      background: var(--surface);
+      border: 1.5px solid var(--primary-text);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.74rem;
+      box-shadow: var(--shadow-sm);
+      animation: popIn 0.3s ease;
+    }
+
+    .lead-card strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .lead-card span {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+
+    .demo-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 540px) {
+      .demo-bottom-grid { grid-template-columns: 1fr; }
+    }
+
+    .mini-panel {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .mini-panel.flash {
+      border-color: var(--primary-text);
+      box-shadow: 0 0 0 3px var(--tint-lavender);
+    }
+
+    .mini-panel-title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .stock-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .stock-row:last-child { border-bottom: none; }
+
+    .stock-badge {
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--tint-sky);
+      color: var(--tint-sky-bar);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    .stock-badge.dropped {
+      background: var(--tint-peach);
+      color: var(--tint-peach-bar);
+    }
+
+    .kpi-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary-text);
+    }
+
+    .mini-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 54px;
+      padding-top: 6px;
+    }
+
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .bar-fill {
+      width: 100%;
+      border-radius: 5px 5px 2px 2px;
+      background: var(--tint-lavender-bar);
+      opacity: 0.45;
+      transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease, background-color 0.3s ease;
+    }
+
+    .bar-fill.live {
+      opacity: 1;
+      background: var(--tint-mint-bar);
+    }
+
+    .bar-lbl {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .demo-caption {
+      padding: 11px 20px;
+      background: var(--tint-mint);
+      color: var(--tint-mint-bar);
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95) translateY(4px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* =====================================================================
+       SECTION 4: THE PROBLEM + BEFORE-TO-TIDY SCROLL ANIMATION
+       ===================================================================== */
+    .chaos-stage {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .chaos-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .chaos-collage {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      transition: gap 0.55s ease;
+    }
+
+    @media (max-width: 720px) {
+      .chaos-collage { grid-template-columns: 1fr; }
+    }
+
+    .chaos-item {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px dashed var(--border-strong);
+      font-size: 0.82rem;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), border-style 0.4s ease, background-color 0.4s ease;
+    }
+
+    /* Messy state (default before scrolling) */
+    .chaos-stage:not(.tidied) .chaos-item:nth-child(1) {
+      background: var(--tint-peach);
+      transform: rotate(-2.8deg) translateY(8px);
+    }
+    .chaos-stage:not(.tidied) .chaos-item:nth-child(2) {
+      background: var(--tint-sky);
+      transform: rotate(2.4deg) translateY(-6px);
+    }
+    .chaos-stage:not(.tidied) .chaos-item:nth-child(3) {
+      background: var(--tint-lavender);
+      transform: rotate(-1.9deg) translateY(10px);
+    }
+
+    /* Tidied state when scrolled or toggled */
+    .chaos-stage.tidied .chaos-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      transform: rotate(0deg) translateY(0);
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 640px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+    .card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .cost-strip {
+      margin-top: 26px;
+      padding: 20px 26px;
+      border-radius: 20px;
+      background: var(--tint-peach);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    .neutral-note {
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* =====================================================================
+       SECTION 5: THE SOLUTION (HUB DIAGRAM WITH INTERACTIVE SPOKES)
+       ===================================================================== */
+    .solution-band {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hub-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    @media (min-width: 920px) {
+      .hub-layout {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 36px;
+      }
+    }
+
+    .hub-diagram {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 24px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+    }
+
+    .hub-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hub-line {
+      stroke: var(--border-strong);
+      stroke-width: 2;
+      stroke-dasharray: 6 5;
+      transition: stroke 0.25s ease, stroke-width 0.25s ease, opacity 0.25s ease;
+      opacity: 0.7;
+    }
+
+    .hub-line.active {
+      stroke: var(--primary-text);
+      stroke-width: 3;
+      opacity: 1;
+      animation: dashFlow 1.4s linear infinite;
+    }
+
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -22; }
+    }
+
+    @media (max-width: 560px) {
+      .hub-diagram { grid-template-columns: 1fr; }
+      .hub-svg { display: none; }
+      .hub-center-badge { order: -1; }
+    }
+
+    .hub-center-badge {
+      grid-column: 1 / -1;
+      justify-self: center;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      background: var(--primary);
+      color: var(--primary-ink);
+      font-weight: 800;
+      font-size: 0.96rem;
+      letter-spacing: 0.03em;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .spoke-card {
+      padding: 20px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .spoke-card:hover,
+    .spoke-card.active {
+      border-color: var(--primary-text);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .spoke-card.active {
+      background: var(--tint-lavender);
+    }
+
+    .spoke-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 8px;
+    }
+
+    .example-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .example-item {
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    /* =====================================================================
+       SECTION 6: HOW IT WORKS (4-STEP HORIZONTAL LOOP)
+       ===================================================================== */
+    .loop-track {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      position: relative;
+    }
+
+    @media (min-width: 820px) {
+      .loop-track {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      .loop-track::before {
+        content: "";
+        position: absolute;
+        top: 34px;
+        left: 8%;
+        right: 8%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--tint-lavender-bar), var(--tint-sky-bar), var(--tint-mint-bar), var(--tint-peach-bar));
+        opacity: 0.35;
+        z-index: 0;
+      }
+    }
+
+    .loop-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px 20px;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .loop-step.highlighted {
+      border-color: var(--primary-text);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .loop-caption {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      padding: 16px 22px;
+      background: var(--tint-lavender);
+      border-radius: 18px;
+    }
+
+    /* =====================================================================
+       SECTION 7: KEY CAPABILITIES (6 MODULES + TINY UI SNIPPETS)
+       ===================================================================== */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 680px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    .cap-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .mini-ui {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .cap-card:hover .mini-ui {
+      border-color: var(--primary-text);
+    }
+
+    .mini-ui-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--tint-mint);
+      color: var(--tint-mint-bar);
+    }
+
+    /* =====================================================================
+       SECTION 8: WHY NEXORA (4 ROWS)
+       ===================================================================== */
+    .why-band {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .why-rows {
+      display: grid;
+      gap: 14px;
+    }
+
+    .why-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 22px 26px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      align-items: center;
+    }
+
+    @media (min-width: 720px) {
+      .why-row {
+        grid-template-columns: 260px 1fr;
+        gap: 28px;
+      }
+    }
+
+    .why-proof {
+      margin-top: 28px;
+      padding: 24px 28px;
+      border-radius: 22px;
+      background: var(--tint-mint);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .why-proof p {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    /* =====================================================================
+       SECTION 9: BUILT FOR INDIA FIRST
+       ===================================================================== */
+    .india-card {
+      background: var(--tint-lavender);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 36px;
+    }
+
+    .india-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    @media (min-width: 780px) {
+      .india-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .india-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    /* =====================================================================
+       SECTION 10: PRICING (3 PLANS — HONEST [PRICE] PLACEHOLDERS)
+       ===================================================================== */
+    .pricing-toggle-wrap {
+      display: inline-flex;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      gap: 4px;
+      margin-top: 18px;
+    }
+
+    .billing-btn {
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .billing-btn.active {
+      background: var(--primary);
+      color: var(--primary-ink);
+    }
+
+    .price-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--primary-text);
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .price-figure {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 10px 0 4px;
+    }
+
+    .price-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .price-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .pricing-extras {
+      margin-top: 24px;
+      padding: 20px 24px;
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* =====================================================================
+       SECTION 11: ROADMAP TIMELINE
+       ===================================================================== */
+    .roadmap-band {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .roadmap-phase {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* =====================================================================
+       SECTION 12: FAQ ACCORDION
+       ===================================================================== */
+    .faq-list {
+      max-width: 780px;
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .faq-btn {
+      width: 100%;
+      padding: 20px 24px;
+      background: transparent;
+      border: none;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--tint-lavender);
+      color: var(--primary-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-panel {
+      display: none;
+      padding: 0 24px 20px;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    .faq-item.open .faq-panel {
+      display: block;
+    }
+
+    /* =====================================================================
+       SECTION 13: FINAL CTA BAND + PILOT FORM
+       ===================================================================== */
+    .pilot-box {
+      background: var(--tint-lavender);
+      border: 1px solid var(--border-strong);
+      border-radius: 28px;
+      padding: 40px 32px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (min-width: 860px) {
+      .pilot-box {
+        grid-template-columns: 0.95fr 1.05fr;
+        padding: 48px;
+      }
+    }
+
+    .pilot-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      display: grid;
+      gap: 14px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--primary-text);
+      background: var(--surface);
+    }
+
+    .form-success {
+      display: none;
+      padding: 20px;
+      border-radius: 16px;
+      background: var(--tint-mint);
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    /* =====================================================================
+       SECTION 14: SLIM FOOTER
+       ===================================================================== */
+    footer {
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-weight: 600;
+    }
+
+    /* =====================================================================
+       ACCESSIBILITY: REDUCED MOTION SUPPORT
+       ===================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .chaos-stage .chaos-item { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- =====================================================================
+       SECTION 1: MINIMAL STICKY NAVIGATION
+       ===================================================================== -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#top" class="brand" aria-label="NEXORA Home">
+        <!-- Original geometric connected-node mark for NEXORA -->
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="10" fill="#52447F" />
+          <circle cx="10.5" cy="11.5" r="2.6" fill="#FFFFFF" />
+          <circle cx="21.5" cy="11.5" r="2.6" fill="#DCF0EA" />
+          <circle cx="16" cy="21" r="2.8" fill="#F0ECFA" />
+          <path d="M12.6 12.6L15 18.8M19.4 12.6L17 18.8M13.1 11.5H18.9" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+        <span>NEXORA</span>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#solution">Product</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle dark mode" title="Toggle light/dark mode">
+          <span id="themeIcon" aria-hidden="true">☾</span>
+        </button>
+        <a href="#pilot-form" class="btn btn-primary btn-sm">Book a pilot</a>
+        <button id="mobileToggle" class="icon-btn mobile-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="mobile-menu" role="navigation" aria-label="Mobile Navigation">
+      <a href="#solution">Product</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===================================================================
+         SECTION 2 & 3: HERO + INTERACTIVE DEMO (SIGNATURE FEATURE)
+         =================================================================== -->
+    <section id="top" class="hero" aria-labelledby="heroHeading">
+      <div class="container hero-grid">
+        <!-- Hero Copy (Left) -->
+        <div>
+          <div class="pill-row">
+            <span class="topic-pill lavender">AI-assisted workflows</span>
+            <span class="topic-pill mint">Connected operations</span>
+          </div>
+
+          <!-- [EDIT ME] Core Headline & Subhead -->
+          <h1 id="heroHeading">The Next Generation Business Developer</h1>
+          <p class="lead">
+            One intelligent workspace to help growing businesses manage relationships, operations and decisions.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="#pilot-form" class="btn btn-primary">Book a pilot</a>
+            <a href="#demo" id="seeActionBtn" class="btn btn-secondary">See it in action</a>
+          </div>
+
+          <p class="hero-note">
+            Early-access pilot built for Indian SMEs running on WhatsApp, calls, and spreadsheets. <span class="edit-badge">[EDIT ME]</span>
+          </p>
+        </div>
+
+        <!-- INTERACTIVE DEMO (Right) — Sample Data Only -->
+        <div id="demo" class="demo-shell" aria-label="Interactive NEXORA workspace sync demo">
+          <div class="demo-topbar">
+            <div class="demo-title">
+              <span>Live Context Sandbox</span>
+              <span style="font-weight:500; opacity:0.8;">(Sample Data)</span>
+            </div>
+            <button id="demoReset" class="demo-reset" type="button">Reset demo</button>
+          </div>
+
+          <!-- 3 Sequential Trigger Controls -->
+          <div class="demo-controls" role="group" aria-label="Demo steps">
+            <button id="step1Btn" class="step-btn active" type="button">1. New lead arrives</button>
+            <button id="step2Btn" class="step-btn" type="button" disabled>2. Convert to order</button>
+            <button id="step3Btn" class="step-btn" type="button" disabled>3. Fulfil</button>
+          </div>
+
+          <div class="demo-body" aria-live="polite">
+            <!-- Synchronized Mini Kanban Board -->
+            <div class="pipeline-grid">
+              <div class="lane">
+                <div class="lane-head"><span>Leads</span><span id="leadCount">0</span></div>
+                <div id="laneLeads"></div>
+              </div>
+              <div class="lane">
+                <div class="lane-head"><span>Orders</span><span id="orderCount">0</span></div>
+                <div id="laneOrders"></div>
+              </div>
+              <div class="lane">
+                <div class="lane-head"><span>Fulfilled</span><span id="fulfilledCount">0</span></div>
+                <div id="laneFulfilled"></div>
+              </div>
+            </div>
+
+            <!-- Synchronized Stock + Live Report Chart -->
+            <div class="demo-bottom-grid">
+              <div id="stockPanel" class="mini-panel">
+                <div class="mini-panel-title">Live Inventory</div>
+                <div class="stock-row">
+                  <span>12A Control Unit</span>
+                  <span id="stockPrimary" class="stock-badge">48 in stock</span>
+                </div>
+                <div class="stock-row">
+                  <span>Packing Box (L)</span>
+                  <span id="stockSecondary" class="stock-badge">30 in stock</span>
+                </div>
+              </div>
+
+              <div id="reportPanel" class="mini-panel">
+                <div class="mini-panel-title">Daily Decision Snapshot</div>
+                <div class="kpi-row">
+                  <span id="kpiLabel" style="font-size:0.74rem; color:var(--text-muted);">Waiting for action</span>
+                  <span id="kpiValue" class="kpi-value">₹0</span>
+                </div>
+                <div class="mini-bars" aria-hidden="true">
+                  <div class="bar-col">
+                    <div class="bar-fill" style="height: 36%"></div>
+                    <span class="bar-lbl">Mon</span>
+                  </div>
+                  <div class="bar-col">
+                    <div class="bar-fill" style="height: 52%"></div>
+                    <span class="bar-lbl">Tue</span>
+                  </div>
+                  <div class="bar-col">
+                    <div class="bar-fill" style="height: 44%"></div>
+                    <span class="bar-lbl">Wed</span>
+                  </div>
+                  <div class="bar-col">
+                    <div id="todayBar" class="bar-fill" style="height: 14%"></div>
+                    <span class="bar-lbl">Today</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-caption">One action. Everything stays in sync.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 4: THE PROBLEM (BEFORE-TO-TIDY SCROLL COLLAGE + 4 CARDS)
+         =================================================================== -->
+    <section id="problem" class="lazy-section" aria-labelledby="problemHeading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">THE PROBLEM</span>
+          <h2 id="problemHeading">When every tool holds half the truth, teams lose time chasing context.</h2>
+          <p class="lead">
+            Most local operations rely on spreadsheets, chat threads, email, and manual calls that never speak to each other.
+          </p>
+        </div>
+
+        <!-- Messy collage that tidies itself on scroll -->
+        <div id="chaosStage" class="chaos-stage reveal">
+          <div class="chaos-header">
+            <div>
+              <strong id="chaosStatusLabel">Before NEXORA: fragmented tools competing for attention</strong>
+              <p style="font-size:0.84rem; color:var(--text-muted);">Scroll or toggle below to see disconnected records align into one workspace.</p>
+            </div>
+            <button id="toggleTidyBtn" class="btn btn-secondary btn-sm" type="button">Align workspace</button>
+          </div>
+
+          <div class="chaos-collage">
+            <div class="chaos-item">
+              <strong>Spreadsheet v4 (Final_NEW.xlsx)</strong>
+              <p style="margin-top:4px; color:var(--text-muted);">"Wait — did anyone deduct yesterday’s 15 boxes from Row 48?"</p>
+            </div>
+            <div class="chaos-item">
+              <strong>Chat Message · 11:42 AM</strong>
+              <p style="margin-top:4px; color:var(--text-muted);">"Bhaiya send the same rate you gave Sharma Store last month."</p>
+            </div>
+            <div class="chaos-item">
+              <strong>Inbox &amp; Call Sticky Note</strong>
+              <p style="margin-top:4px; color:var(--text-muted);">"Follow up on pending quote before 4 PM dispatch van leaves."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Problem Cards -->
+        <div class="grid-4 reveal">
+          <article class="card">
+            <div class="accent-bar bar-peach"></div>
+            <h3>Scattered information</h3>
+            <p>Customer commitments sit in chat, pricing sits in sheets, and history vanishes when phones change hands.</p>
+          </article>
+
+          <article class="card">
+            <div class="accent-bar bar-sky"></div>
+            <h3>Manual coordination</h3>
+            <p>Staff re-type the same order lines three times between inquiry, warehouse check, and final billing.</p>
+          </article>
+
+          <article class="card">
+            <div class="accent-bar bar-lavender"></div>
+            <h3>Limited visibility</h3>
+            <p>Managers spot stock shortages or stalled quotes only after a customer complains or cancels.</p>
+          </article>
+
+          <article class="card">
+            <div class="accent-bar bar-mint"></div>
+            <h3>Hard-to-scale processes</h3>
+            <p>Adding one more salesperson or godown creates confusion when rules stay inside people’s heads.</p>
+          </article>
+        </div>
+
+        <div class="cost-strip reveal">
+          <span>The cost: slower execution, missed follow-ups, decisions with incomplete context.</span>
+          <span class="neutral-note">Established tools prove the need. NEXORA is simpler and built for one niche.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 5: THE SOLUTION (HUB DIAGRAM WITH INTERACTIVE SPOKES)
+         =================================================================== -->
+    <section id="solution" class="solution-band lazy-section" aria-labelledby="solutionHeading">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-tag">THE SOLUTION</span>
+          <h2 id="solutionHeading">Customers, orders, stock, and reports share ONE context.</h2>
+          <p class="lead">
+            Select or hover any spoke around NEXORA to see how an update in one place flows everywhere else.
+          </p>
+        </div>
+
+        <div class="hub-layout reveal">
+          <div class="hub-diagram" role="tablist" aria-label="NEXORA four pillars">
+            <svg class="hub-svg" viewBox="0 0 400 320" preserveAspectRatio="none" aria-hidden="true">
+              <line class="hub-line active" data-line="customers" x1="200" y1="160" x2="96" y2="62" />
+              <line class="hub-line" data-line="operations" x1="200" y1="160" x2="304" y2="62" />
+              <line class="hub-line" data-line="intelligence" x1="200" y1="160" x2="96" y2="258" />
+              <line class="hub-line" data-line="automation" x1="200" y1="160" x2="304" y2="258" />
+            </svg>
+
+            <button class="spoke-card active" type="button" role="tab" aria-selected="true" data-spoke="customers">
+              <span class="spoke-tag" style="background:var(--tint-lavender); color:var(--primary-text);">Customers</span>
+              <h3>CRM &amp; relationships</h3>
+              <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">Contacts, repeat preferences, and follow-up timing.</p>
+            </button>
+
+            <button class="spoke-card" type="button" role="tab" aria-selected="false" data-spoke="operations">
+              <span class="spoke-tag" style="background:var(--tint-sky); color:var(--tint-sky-bar);">Operations</span>
+              <h3>Orders &amp; inventory</h3>
+              <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">Quotes, confirmed orders, and real-time stock checks.</p>
+            </button>
+
+            <div class="hub-center-badge">NEXORA · One Shared Context</div>
+
+            <button class="spoke-card" type="button" role="tab" aria-selected="false" data-spoke="intelligence">
+              <span class="spoke-tag" style="background:var(--tint-mint); color:var(--tint-mint-bar);">Intelligence</span>
+              <h3>Analytics &amp; insights</h3>
+              <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">Daily movement, low stock signals, and buyer trends.</p>
+            </button>
+
+            <button class="spoke-card" type="button" role="tab" aria-selected="false" data-spoke="automation">
+              <span class="spoke-tag" style="background:var(--tint-peach); color:var(--tint-peach-bar);">Automation</span>
+              <h3>AI-assisted workflows</h3>
+              <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">Smart order drafts and reminders reviewed by humans.</p>
+            </button>
+          </div>
+
+          <div class="example-box" aria-live="polite">
+            <span id="spokePill" class="section-tag" style="margin-bottom:0; width:fit-content;">Customers · Real Examples</span>
+            <h3 id="spokeTitle">Know every customer before picking up the phone.</h3>
+            <div id="spokeExamples" style="display:grid; gap:10px;">
+              <div class="example-item">See a buyer’s last three orders and usual pack sizes on one screen.</div>
+              <div class="example-item">Keep inquiry notes tied directly to their open quotes and invoices.</div>
+              <div class="example-item">Flag overdue check-ins cleanly so steady accounts never slip away.</div>
+            </div>
+            <div style="margin-top:8px;">
+              <a href="#pilot-form" class="btn btn-primary">Book a pilot</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 6: HOW IT WORKS (ANIMATED 4-STEP HORIZONTAL LOOP)
+         =================================================================== -->
+    <section id="how-it-works" class="lazy-section" aria-labelledby="howHeading">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-tag">HOW IT WORKS</span>
+          <h2 id="howHeading">One calm operating rhythm from first message to insight.</h2>
+        </div>
+
+        <div id="loopTrack" class="loop-track reveal">
+          <div class="loop-step highlighted" data-step="0">
+            <div class="step-num" style="background:var(--tint-lavender); color:var(--primary-text);">01</div>
+            <h3>Capture</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:6px;">
+              Bring incoming inquiries, phone notes, and chat requests into one clear queue.
+            </p>
+          </div>
+
+          <div class="loop-step" data-step="1">
+            <div class="step-num" style="background:var(--tint-sky); color:var(--tint-sky-bar);">02</div>
+            <h3>Coordinate</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:6px;">
+              Verify quantities against stock, clarify missing sizes, and assign dispatch owners.
+            </p>
+          </div>
+
+          <div class="loop-step" data-step="2">
+            <div class="step-num" style="background:var(--tint-mint); color:var(--tint-mint-bar);">03</div>
+            <h3>Fulfil</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:6px;">
+              Confirm delivery, adjust item counts automatically, and keep bill data clean.
+            </p>
+          </div>
+
+          <div class="loop-step" data-step="3">
+            <div class="step-num" style="background:var(--tint-peach); color:var(--tint-peach-bar);">04</div>
+            <h3>Understand</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:6px;">
+              See top items, repeat buyers, and slow stock without manual Friday spreadsheets.
+            </p>
+          </div>
+        </div>
+
+        <p class="loop-caption reveal">
+          AI can surface patterns, suggest actions and reduce repetitive work, with people in control.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 7: KEY CAPABILITIES (6 MODULES + TINY UI SNIPPETS)
+         =================================================================== -->
+    <section id="capabilities" class="lazy-section" style="padding-top:20px;" aria-labelledby="capHeading">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-tag">KEY CAPABILITIES</span>
+          <h2 id="capHeading">Six essential modules, connected natively.</h2>
+        </div>
+
+        <div class="grid-3 reveal">
+          <!-- Module 1 -->
+          <article class="card cap-card">
+            <div>
+              <div class="accent-bar bar-lavender"></div>
+              <h3>AI automation</h3>
+              <p>Drafts order lines and follow-ups from messy messages while people confirm.</p>
+            </div>
+            <div class="mini-ui">
+              <div class="mini-ui-row">
+                <span>Draft from chat ready</span>
+                <span class="chip">Approve</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Module 2 -->
+          <article class="card cap-card">
+            <div>
+              <div class="accent-bar bar-sky"></div>
+              <h3>CRM</h3>
+              <p>Keeps buyer history, contacts, and open quotes tied to every account.</p>
+            </div>
+            <div class="mini-ui">
+              <div class="mini-ui-row">
+                <span>Kaveri Stores · Active</span>
+                <span class="chip" style="background:var(--tint-sky); color:var(--tint-sky-bar);">3 Quotes</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Module 3 -->
+          <article class="card cap-card">
+            <div>
+              <div class="accent-bar bar-mint"></div>
+              <h3>Orders</h3>
+              <p>Moves each confirmed request cleanly from review desk to packed delivery.</p>
+            </div>
+            <div class="mini-ui">
+              <div class="mini-ui-row">
+                <span>Order #204 · Verified</span>
+                <span class="chip">Ready</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Module 4 -->
+          <article class="card cap-card">
+            <div>
+              <div class="accent-bar bar-peach"></div>
+              <h3>Inventory</h3>
+              <p>Updates available item stock in step with reservations and fulfilled orders.</p>
+            </div>
+            <div class="mini-ui">
+              <div class="mini-ui-row">
+                <span>Unit Pack 500g</span>
+                <span class="chip" style="background:var(--tint-peach); color:var(--tint-peach-bar);">24 left</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Module 5 -->
+          <article class="card cap-card">
+            <div>
+              <div class="accent-bar bar-lavender"></div>
+              <h3>Analytics</h3>
+              <p>Turns everyday order activity into clear daily summaries and low-stock flags.</p>
+            </div>
+            <div class="mini-ui">
+              <div class="mini-ui-row">
+                <span>Daily Fulfillment Pulse</span>
+                <span class="chip">Live View</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Module 6 -->
+          <article class="card cap-card">
+            <div>
+              <div class="accent-bar bar-sky"></div>
+              <h3>Workspace</h3>
+              <p>Unites tasks, approvals, and team handoffs in one fast, calm screen.</p>
+            </div>
+            <div class="mini-ui">
+              <div class="mini-ui-row">
+                <span>Inbox · Orders · Stock</span>
+                <span class="chip" style="background:var(--tint-lavender); color:var(--primary-text);">1 Place</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 8: WHY NEXORA (4 STRUCTURED ROWS + PROOF LINE)
+         =================================================================== -->
+    <section id="why-nexora" class="why-band lazy-section" aria-labelledby="whyHeading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">WHY NEXORA</span>
+          <h2 id="whyHeading">Practical software built around how real SMEs work.</h2>
+        </div>
+
+        <div class="why-rows reveal">
+          <div class="why-row">
+            <h3>1. Connected by design</h3>
+            <p style="color:var(--text-muted);">Customer profiles, order drafts, stock balances, and daily reports update from one shared record—not overnight manual imports.</p>
+          </div>
+
+          <div class="why-row">
+            <h3>2. AI with a job to do</h3>
+            <p style="color:var(--text-muted);">Focused assistance parses shorthand orders, flags missing pack sizes, and prepares drafts cleanly instead of cluttering screens with chatbots.</p>
+          </div>
+
+          <div class="why-row">
+            <h3>3. SME-first experience</h3>
+            <p style="color:var(--text-muted);">Calm typography, quick keyboard actions, and readable summaries made for busy owners, floor managers, and desk clerks.</p>
+          </div>
+
+          <div class="why-row">
+            <h3>4. Modular growth path</h3>
+            <p style="color:var(--text-muted);">Start with customer tracking and order coordination today; enable deeper automation and reporting only as your team needs them.</p>
+          </div>
+        </div>
+
+        <div class="why-proof reveal">
+          <p>"Less time coordinating tools, more time serving customers and growing."</p>
+          <a href="#pilot-form" class="btn btn-primary">Book a pilot</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 9: BUILT FOR INDIA FIRST ([EDIT ME] & PLANNED PLACEHOLDERS)
+         =================================================================== -->
+    <section id="india-first" class="lazy-section" aria-labelledby="indiaHeading">
+      <div class="container">
+        <div class="india-card reveal">
+          <span class="section-tag" style="background:var(--surface);">BUILT FOR INDIA FIRST</span>
+          <h2 id="indiaHeading">Designed for Indian retail, distribution, and local operations.</h2>
+          <p class="lead" style="max-width:700px;">
+            Indian businesses handle fast phone inquiries, Hinglish messages, regional pack sizes, and tight dispatch windows. NEXORA adapts to local workflows rather than forcing rigid foreign templates. <span class="edit-badge">[EDIT ME]</span>
+          </p>
+
+          <div class="india-grid">
+            <div class="india-item">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="planned-badge">Planned</span>
+                <span class="edit-badge">[EDIT ME]</span>
+              </div>
+              <h3>INR-First Billing Tiers</h3>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin-top:6px;">
+                Predictable monthly billing in Indian Rupees (₹), structured without surprise per-feature fees.
+              </p>
+            </div>
+
+            <div class="india-item">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="planned-badge">Planned</span>
+                <span class="edit-badge">[EDIT ME]</span>
+              </div>
+              <h3>GST-Ready Invoicing</h3>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin-top:6px;">
+                Support for HSN codes, tax rate breakdowns, and clean export formats compatible with local accountants.
+              </p>
+            </div>
+
+            <div class="india-item">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="planned-badge">Planned</span>
+                <span class="edit-badge">[EDIT ME]</span>
+              </div>
+              <h3>WhatsApp Business Bridge</h3>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin-top:6px;">
+                Capture customer requests and send clerk-approved confirmations through official WhatsApp workflows.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 10: PRICING (3 PLANS — HONEST [PRICE] PLACEHOLDERS)
+         =================================================================== -->
+    <section id="pricing" class="lazy-section" style="padding-top:10px;" aria-labelledby="pricingHeading">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-tag">EARLY ACCESS PRICING</span>
+          <h2 id="pricingHeading">Clear, honest plans validated alongside our pilot teams.</h2>
+          <p class="lead">Pricing to be validated with pilot customers.</p>
+
+          <div class="pricing-toggle-wrap" role="group" aria-label="Billing interval">
+            <button id="billMonthly" class="billing-btn active" type="button">Monthly</button>
+            <button id="billAnnual" class="billing-btn" type="button">Annual <span class="edit-badge">[EDIT ME]</span></button>
+          </div>
+        </div>
+
+        <div class="grid-3 reveal">
+          <!-- Plan 1: Starter -->
+          <article class="card price-card">
+            <div>
+              <div class="accent-bar bar-sky"></div>
+              <h3>Starter</h3>
+              <p style="font-size:0.88rem;">Core workspace for small teams replacing sheets.</p>
+              <div class="price-figure">
+                ₹[PRICE] <span style="font-size:0.88rem; font-weight:600; color:var(--text-muted);" class="billing-suffix">/ month</span> <span class="edit-badge">[EDIT ME]</span>
+              </div>
+              <ul class="price-list" style="margin-top:16px;">
+                <li>• Unified customer &amp; contact CRM</li>
+                <li>• Order tracking &amp; status board</li>
+                <li>• Live stock counts &amp; basic daily reports</li>
+              </ul>
+            </div>
+            <a href="#pilot-form" class="btn btn-secondary" style="width:100%;">Join Starter waitlist</a>
+          </article>
+
+          <!-- Plan 2: Growth (Highlighted) -->
+          <article class="card price-card featured">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="accent-bar bar-lavender" style="margin-bottom:0;"></div>
+                <span class="section-tag" style="margin-bottom:0;">Pilot Focus</span>
+              </div>
+              <h3 style="margin-top:16px;">Growth</h3>
+              <p style="font-size:0.88rem;">More automation for active distribution &amp; sales desks.</p>
+              <div class="price-figure">
+                ₹[PRICE] <span style="font-size:0.88rem; font-weight:600; color:var(--text-muted);" class="billing-suffix">/ month</span> <span class="edit-badge">[EDIT ME]</span>
+              </div>
+              <ul class="price-list" style="margin-top:16px;">
+                <li>• Everything in Starter workspace</li>
+                <li>• AI-assisted draft capture &amp; shorthand memory</li>
+                <li>• Low-stock alerts &amp; team task handoffs</li>
+              </ul>
+            </div>
+            <a href="#pilot-form" class="btn btn-primary" style="width:100%;">Book a pilot</a>
+          </article>
+
+          <!-- Plan 3: Scale -->
+          <article class="card price-card">
+            <div>
+              <div class="accent-bar bar-mint"></div>
+              <h3>Scale</h3>
+              <p style="font-size:0.88rem;">Advanced controls for multi-desk or multi-godown teams.</p>
+              <div class="price-figure">
+                ₹[PRICE] <span style="font-size:0.88rem; font-weight:600; color:var(--text-muted);" class="billing-suffix">/ month</span> <span class="edit-badge">[EDIT ME]</span>
+              </div>
+              <ul class="price-list" style="margin-top:16px;">
+                <li>• Everything in Growth plan</li>
+                <li>• Role permissions, activity history &amp; custom exports</li>
+                <li>• Dedicated pilot configuration &amp; integration planning</li>
+              </ul>
+            </div>
+            <a href="#pilot-form" class="btn btn-secondary" style="width:100%;">Discuss Scale pilot</a>
+          </article>
+        </div>
+
+        <!-- Transparent Pricing Notes (No asterisks) -->
+        <div class="pricing-extras reveal">
+          <div>
+            <strong>Billing flexibility</strong><br />
+            Choose monthly or annual billing once pilot validation concludes. <span class="edit-badge">[EDIT ME]</span>
+          </div>
+          <div>
+            <strong>Optional guided onboarding</strong><br />
+            Hands-on assistance importing customer lists and SKU sheets: [PRICE] <span class="edit-badge">[EDIT ME]</span>
+          </div>
+          <div>
+            <strong>Integrations &amp; add-ons</strong><br />
+            Accounting connectors and WhatsApp Business API options are offered transparently without hidden tiers. <span class="planned-badge">Planned</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 11: ROADMAP TIMELINE
+         =================================================================== -->
+    <section id="roadmap" class="roadmap-band lazy-section" aria-labelledby="roadmapHeading">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-tag">ROADMAP</span>
+          <h2 id="roadmapHeading">How we are building NEXORA carefully with early customers.</h2>
+        </div>
+
+        <div class="grid-4 reveal">
+          <article class="card">
+            <span class="roadmap-phase" style="color:var(--primary-text);">Now · Active</span>
+            <h3>Define the wedge</h3>
+            <p>Work closely with initial pilot businesses to validate core order intake, stock sync, and customer context. <span class="edit-badge">[EDIT ME]</span></p>
+          </article>
+
+          <article class="card">
+            <span class="roadmap-phase" style="color:var(--tint-sky-bar);">Next</span>
+            <h3>Launch the core</h3>
+            <p>Open early-access CRM, order fulfillment tracking, and team permissions for broader SME teams. <span class="edit-badge">[EDIT ME]</span></p>
+          </article>
+
+          <article class="card">
+            <span class="roadmap-phase" style="color:var(--tint-mint-bar);">Then</span>
+            <h3>Add intelligence</h3>
+            <p>Deliver GST-ready export packages, official WhatsApp workflows, and proactive demand alerts. <span class="edit-badge">[EDIT ME]</span></p>
+          </article>
+
+          <article class="card">
+            <span class="roadmap-phase" style="color:var(--tint-peach-bar);">Future</span>
+            <h3>Scale the platform</h3>
+            <p>Expand multi-location inventory sync, supplier coordination, and deep accounting bridges. <span class="edit-badge">[EDIT ME]</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 12: FAQ ACCORDION
+         =================================================================== -->
+    <section id="faq" class="lazy-section" aria-labelledby="faqHeading">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-tag">FAQ</span>
+          <h2 id="faqHeading">Plain answers before you apply for early access.</h2>
+        </div>
+
+        <div class="faq-list reveal">
+          <div class="faq-item open">
+            <button class="faq-btn" type="button" aria-expanded="true">
+              <span>Is AI making decisions for me?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-panel">
+              No, people stay in control. NEXORA organizes incoming messages, checks stock, and prepares clear drafts—your team reviews and approves every confirmation, dispatch, or invoice step.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" type="button" aria-expanded="false">
+              <span>What happens to our existing Excel sheets and customer lists?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-panel">
+              During pilot onboarding, we help bring your active product list and regular customer contacts into NEXORA cleanly, while letting you export your records anytime.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" type="button" aria-expanded="false">
+              <span>Who is the early-access pilot built for?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-panel">
+              Small and mid-sized retail, distribution, wholesale, and local service businesses in India that handle recurring orders across WhatsApp, calls, email, and spreadsheets.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" type="button" aria-expanded="false">
+              <span>Are GST invoicing and WhatsApp API already finished?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-panel">
+              Several local integrations are clearly labeled Planned while we validate core operational stability first. Pilot partners directly shape which local integrations launch next.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" type="button" aria-expanded="false">
+              <span>How will pricing work after the pilot?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-panel">
+              Final INR pricing across Starter, Growth, and Scale will be validated transparently with pilot customers before general launch, with clear monthly and annual choices. <span class="edit-badge">[EDIT ME]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 13: FINAL CTA BAND + PILOT APPLICATION FORM
+         =================================================================== -->
+    <section id="pilot-form" class="lazy-section" style="padding-top:10px;" aria-labelledby="pilotHeading">
+      <div class="container">
+        <div class="pilot-box reveal">
+          <div>
+            <span class="section-tag" style="background:var(--surface);">EARLY ACCESS PILOT</span>
+            <h2 id="pilotHeading">Be one of our first pilot businesses</h2>
+            <p class="lead">
+              Tell us how your orders and customer follow-ups move today. We review pilot applications directly to make sure NEXORA fits your day-to-day workflow.
+            </p>
+            <p style="margin-top:16px; font-size:0.86rem; color:var(--text-muted);">
+              No noisy follow-ups. No fake promises. Just a practical conversation with the product team. <span class="edit-badge">[EDIT ME]</span>
+            </p>
+          </div>
+
+          <div>
+            <form id="pilotApplication" class="pilot-form" novalidate>
+              <div class="field">
+                <label for="ownerName">Your name</label>
+                <input id="ownerName" name="ownerName" type="text" required placeholder="e.g., Arjun Deshmukh" />
+              </div>
+
+              <div class="field">
+                <label for="businessType">Business type</label>
+                <select id="businessType" name="businessType" required>
+                  <option value="">Select your business type</option>
+                  <option value="Retail">Retail shop or multi-outlet store</option>
+                  <option value="Distribution">Wholesale &amp; distribution</option>
+                  <option value="Service">Local service business</option>
+                  <option value="Trading">Trading / light manufacturing</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="teamSize">Team size</label>
+                <select id="teamSize" name="teamSize" required>
+                  <option value="">Select team size</option>
+                  <option value="1-5">1–5 people</option>
+                  <option value="6-15">6–15 people</option>
+                  <option value="16-50">16–50 people</option>
+                  <option value="50+">50+ people</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="headache">Biggest headache right now</label>
+                <textarea id="headache" name="headache" rows="3" required placeholder="e.g., WhatsApp orders get missed or stock counts stay wrong..."></textarea>
+              </div>
+
+              <p id="formError" style="display:none; color:var(--tint-peach-bar); font-size:0.84rem; font-weight:700;" role="alert"></p>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;">Book a pilot</button>
+              <span style="font-size:0.74rem; color:var(--text-muted); text-align:center;">
+                Connect this form to your backend or email webhook before publishing. <span class="edit-badge">[EDIT ME]</span>
+              </span>
+            </form>
+
+            <div id="formSuccess" class="form-success" role="status">
+              <strong>Pilot request preview recorded!</strong>
+              <p id="successSummary" style="margin-top:6px;"></p>
+              <button id="resetFormBtn" class="btn btn-secondary btn-sm" type="button" style="margin-top:12px;">Edit response</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       SECTION 14: SLIM FOOTER
+       ===================================================================== -->
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <strong style="color:var(--text);">NEXORA</strong> — The Next Generation Business Developer
+        <div style="font-size:0.78rem; margin-top:4px;">
+          Contact: hello@<span class="edit-badge">[EDIT ME]</span>.in · Built for Indian SMEs
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="#solution">Product</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       INLINE VANILLA JAVASCRIPT (Light, Zero Dependencies, Accessible)
+       ===================================================================== -->
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* 1. LIGHT / DARK THEME TOGGLE */
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+
+      function applyTheme(mode) {
+        root.setAttribute('data-theme', mode);
+        themeIcon.textContent = mode === 'dark' ? '☀' : '☾';
+        try { localStorage.setItem('nexora_theme', mode); } catch (e) {}
+      }
+
+      const savedTheme = (() => {
+        try { return localStorage.getItem('nexora_theme'); } catch (e) { return null; }
+      })();
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        applyTheme('dark');
+      } else {
+        applyTheme('light');
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      });
+
+      /* 2. MOBILE NAVIGATION DRAWER */
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        mobileToggle.setAttribute('aria-expanded', String(open));
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      /* 3. INTERACTIVE SANDBOX DEMO (One action -> Everything stays in sync) */
+      const step1Btn = document.getElementById('step1Btn');
+      const step2Btn = document.getElementById('step2Btn');
+      const step3Btn = document.getElementById('step3Btn');
+      const demoReset = document.getElementById('demoReset');
+
+      const laneLeads = document.getElementById('laneLeads');
+      const laneOrders = document.getElementById('laneOrders');
+      const laneFulfilled = document.getElementById('laneFulfilled');
+      const leadCount = document.getElementById('leadCount');
+      const orderCount = document.getElementById('orderCount');
+      const fulfilledCount = document.getElementById('fulfilledCount');
+
+      const stockPrimary = document.getElementById('stockPrimary');
+      const stockSecondary = document.getElementById('stockSecondary');
+      const stockPanel = document.getElementById('stockPanel');
+      const reportPanel = document.getElementById('reportPanel');
+      const kpiLabel = document.getElementById('kpiLabel');
+      const kpiValue = document.getElementById('kpiValue');
+      const todayBar = document.getElementById('todayBar');
+
+      let demoStage = 0;
+
+      function flashPanels() {
+        [stockPanel, reportPanel].forEach(el => {
+          el.classList.remove('flash');
+          void el.offsetWidth;
+          el.classList.add('flash');
+          setTimeout(() => el.classList.remove('flash'), 750);
+        });
+      }
+
+      function makeCard(title, subtitle) {
+        const div = document.createElement('div');
+        div.className = 'lead-card';
+        div.innerHTML = '<strong>' + title + '</strong><span>' + subtitle + '</span>';
+        return div;
+      }
+
+      function renderDemo(stage) {
+        demoStage = stage;
+        laneLeads.innerHTML = '';
+        laneOrders.innerHTML = '';
+        laneFulfilled.innerHTML = '';
+        leadCount.textContent = '0';
+        orderCount.textContent = '0';
+        fulfilledCount.textContent = '0';
+
+        // Reset buttons
+        step1Btn.className = 'step-btn';
+        step2Btn.className = 'step-btn';
+        step3Btn.className = 'step-btn';
+
+        if (stage === 0) {
+          step1Btn.classList.add('active');
+          step1Btn.disabled = false;
+          step2Btn.disabled = true;
+          step3Btn.disabled = true;
+          stockPrimary.textContent = '48 in stock';
+          stockSecondary.textContent = '30 in stock';
+          stockPrimary.className = 'stock-badge';
+          kpiLabel.textContent = 'Click step 1 above';
+          kpiValue.textContent = '₹0';
+          todayBar.style.height = '14%';
+          todayBar.classList.remove('live');
+        } else if (stage === 1) {
+          step1Btn.classList.add('done');
+          step2Btn.classList.add('active');
+          step1Btn.disabled = true;
+          step2Btn.disabled = false;
+          step3Btn.disabled = true;
+
+          laneLeads.appendChild(makeCard('Mehta Electricals', 'Inquiry: 12x Control Unit'));
+          leadCount.textContent = '1';
+          stockPrimary.textContent = '48 in stock';
+          stockSecondary.textContent = '30 in stock';
+          kpiLabel.textContent = '1 new quote logged';
+          kpiValue.textContent = '₹14,400';
+          todayBar.style.height = '42%';
+          todayBar.classList.add('live');
+          flashPanels();
+        } else if (stage === 2) {
+          step1Btn.classList.add('done');
+          step2Btn.classList.add('done');
+          step3Btn.classList.add('active');
+          step1Btn.disabled = true;
+          step2Btn.disabled = true;
+          step3Btn.disabled = false;
+
+          laneOrders.appendChild(makeCard('Order #SM-104', '12 units reserved'));
+          orderCount.textContent = '1';
+          stockPrimary.textContent = '48 (12 reserved)';
+          stockSecondary.textContent = '28 (2 reserved)';
+          kpiLabel.textContent = 'Order confirmed';
+          kpiValue.textContent = '₹14,400';
+          todayBar.style.height = '68%';
+          todayBar.classList.add('live');
+          flashPanels();
+        } else if (stage === 3) {
+          step1Btn.classList.add('done');
+          step2Btn.classList.add('done');
+          step3Btn.classList.add('done');
+          step1Btn.disabled = true;
+          step2Btn.disabled = true;
+          step3Btn.disabled = true;
+
+          laneFulfilled.appendChild(makeCard('Order #SM-104', 'Dispatched · Stock updated'));
+          fulfilledCount.textContent = '1';
+          stockPrimary.textContent = '36 left (-12)';
+          stockPrimary.className = 'stock-badge dropped';
+          stockSecondary.textContent = '28 left (-2)';
+          kpiLabel.textContent = 'Today fulfilled (+1)';
+          kpiValue.textContent = '₹14,400';
+          todayBar.style.height = '92%';
+          todayBar.classList.add('live');
+          flashPanels();
+        }
+      }
+
+      step1Btn.addEventListener('click', () => renderDemo(1));
+      step2Btn.addEventListener('click', () => renderDemo(2));
+      step3Btn.addEventListener('click', () => renderDemo(3));
+      demoReset.addEventListener('click', () => renderDemo(0));
+
+      document.getElementById('seeActionBtn').addEventListener('click', () => {
+        if (demoStage === 0) renderDemo(1);
+      });
+
+      /* 4. PROBLEM COLLAGE TIDY-ON-SCROLL */
+      const chaosStage = document.getElementById('chaosStage');
+      const toggleTidyBtn = document.getElementById('toggleTidyBtn');
+      const chaosStatusLabel = document.getElementById('chaosStatusLabel');
+      let manualChaosOverride = false;
+
+      function setTidied(isTidy) {
+        chaosStage.classList.toggle('tidied', isTidy);
+        chaosStatusLabel.textContent = isTidy
+          ? 'Tidied view: scattered fragments aligned into one record'
+          : 'Before NEXORA: fragmented tools competing for attention';
+        toggleTidyBtn.textContent = isTidy ? 'Show messy before' : 'Align workspace';
+      }
+
+      toggleTidyBtn.addEventListener('click', () => {
+        manualChaosOverride = true;
+        setTidied(!chaosStage.classList.contains('tidied'));
+      });
+
+      if (!reducedMotion && 'IntersectionObserver' in window) {
+        const chaosObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!manualChaosOverride && entry.intersectionRatio >= 0.45) {
+              setTidied(true);
+            }
+          });
+        }, { threshold: [0.45] });
+        chaosObserver.observe(chaosStage);
+      } else {
+        setTidied(true);
+      }
+
+      /* 5. SOLUTION HUB INTERACTIVE SPOKES */
+      const spokeData = {
+        customers: {
+          pill: 'Customers · Real Examples',
+          title: 'Know every customer before picking up the phone.',
+          examples: [
+            'See a buyer’s last three orders and usual pack sizes on one screen.',
+            'Keep inquiry notes tied directly to their open quotes and invoices.',
+            'Flag overdue check-ins cleanly so steady accounts never slip away.'
+          ]
+        },
+        operations: {
+          pill: 'Operations · Real Examples',
+          title: 'Stop promising inventory that already left the warehouse.',
+          examples: [
+            'Reserve stock immediately when an inquiry becomes a confirmed order.',
+            'Catch vague requests early before loading the wrong item on the van.',
+            'Keep order desk clerks and godown staff reading the same live list.'
+          ]
+        },
+        intelligence: {
+          pill: 'Intelligence · Real Examples',
+          title: 'Clear daily numbers without Friday spreadsheet surgery.',
+          examples: [
+            'Spot which items ran low this week alongside average order cadence.',
+            'Identify repeat customers slowing down before orders disappear.',
+            'Inspect pending dispatches against daily totals in two seconds.'
+          ]
+        },
+        automation: {
+          pill: 'Automation · Real Examples',
+          title: 'Reduce repetitive typing while keeping humans in charge.',
+          examples: [
+            'Turn short text inquiries into structured draft order lines automatically.',
+            'Remember a regular customer’s shorthand once verified by your clerk.',
+            'Prepare clarification questions cleanly for human send-off.'
+          ]
+        }
+      };
+
+      const spokeCards = document.querySelectorAll('.spoke-card');
+      const hubLines = document.querySelectorAll('.hub-line');
+      const spokePill = document.getElementById('spokePill');
+      const spokeTitle = document.getElementById('spokeTitle');
+      const spokeExamples = document.getElementById('spokeExamples');
+
+      function selectSpoke(key) {
+        const data = spokeData[key];
+        if (!data) return;
+        spokeCards.forEach(btn => {
+          const match = btn.getAttribute('data-spoke') === key;
+          btn.classList.toggle('active', match);
+          btn.setAttribute('aria-selected', String(match));
+        });
+        hubLines.forEach(line => {
+          line.classList.toggle('active', line.getAttribute('data-line') === key);
+        });
+        spokePill.textContent = data.pill;
+        spokeTitle.textContent = data.title;
+        spokeExamples.innerHTML = data.examples
+          .map(txt => '<div class="example-item">' + txt + '</div>')
+          .join('');
+      }
+
+      spokeCards.forEach(card => {
+        const key = card.getAttribute('data-spoke');
+        card.addEventListener('click', () => selectSpoke(key));
+        card.addEventListener('mouseenter', () => selectSpoke(key));
+        card.addEventListener('focus', () => selectSpoke(key));
+      });
+
+      /* 6. HOW IT WORKS ANIMATED LOOP */
+      const loopSteps = document.querySelectorAll('.loop-step');
+      if (!reducedMotion && loopSteps.length) {
+        let idx = 0;
+        setInterval(() => {
+          idx = (idx + 1) % loopSteps.length;
+          loopSteps.forEach((step, i) => step.classList.toggle('highlighted', i === idx));
+        }, 2600);
+      }
+
+      /* 7. PRICING MONTHLY / ANNUAL DISPLAY TOGGLE */
+      const billMonthly = document.getElementById('billMonthly');
+      const billAnnual = document.getElementById('billAnnual');
+      const billingSuffixes = document.querySelectorAll('.billing-suffix');
+
+      billMonthly.addEventListener('click', () => {
+        billMonthly.classList.add('active');
+        billAnnual.classList.remove('active');
+        billingSuffixes.forEach(s => { s.textContent = '/ month'; });
+      });
+      billAnnual.addEventListener('click', () => {
+        billAnnual.classList.add('active');
+        billMonthly.classList.remove('active');
+        billingSuffixes.forEach(s => { s.textContent = '/ month (billed annually)'; });
+      });
+
+      /* 8. FAQ ACCESSIBLE ACCORDION */
+      document.querySelectorAll('.faq-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item');
+          const isOpen = item.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(isOpen));
+        });
+      });
+
+      /* 9. PILOT APPLICATION FORM VALIDATION & PREVIEW */
+      const pilotForm = document.getElementById('pilotApplication');
+      const formError = document.getElementById('formError');
+      const formSuccess = document.getElementById('formSuccess');
+      const successSummary = document.getElementById('successSummary');
+      const resetFormBtn = document.getElementById('resetFormBtn');
+
+      pilotForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('ownerName').value.trim();
+        const type = document.getElementById('businessType').value;
+        const size = document.getElementById('teamSize').value;
+        const headache = document.getElementById('headache').value.trim();
+
+        if (!name || !type || !size || !headache) {
+          formError.textContent = 'Please fill in your name, business type, team size, and main operational challenge.';
+          formError.style.display = 'block';
+          return;
+        }
+
+        formError.style.display = 'none';
+        pilotForm.style.display = 'none';
+        formSuccess.style.display = 'block';
+        successSummary.textContent =
+          'Thank you, ' + name + ' (' + type + ', team of ' + size + '). Note noted: "' + headache + '". Connect this static HTML form to your email/CRM endpoint before going live.';
+      });
+
+      resetFormBtn.addEventListener('click', () => {
+        formSuccess.style.display = 'none';
+        pilotForm.style.display = 'grid';
+      });
+
+      /* 10. INTERSECTION OBSERVER SCROLL REVEALS */
+      const reveals = document.querySelectorAll('.reveal');
+      if (!reducedMotion && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        reveals.forEach(el => observer.observe(el));
+      } else {
+        reveals.forEach(el => el.classList.add('visible'));
+      }
+    })();
+  </script>
+</body>
+</html>
